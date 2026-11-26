@@ -36,6 +36,15 @@ p{font-size:18px}
 @keyframes burst{
  to{transform:translate(var(--x),var(--y)) rotate(720deg);opacity:0}
 }
+.floating{
+ position:absolute;bottom:-40px;
+ animation:float 7s linear forwards;
+}
+.heart{font-size:25px}
+.sparkle{font-size:22px}
+@keyframes float{
+ to{transform:translateY(-115vh) rotate(35deg);opacity:0}
+}
 button{
  border:0;border-radius:25px;padding:14px 25px;
  background:#ff65a5;color:white;font-size:17px;
@@ -67,7 +76,6 @@ function popBalloon(b){
  }
  b.remove();
 }
-
 function makeBalloons(){
  for(let i=0;i<7;i++){
   const b=document.createElement("div");
@@ -81,90 +89,18 @@ function makeBalloons(){
   setTimeout(()=>b.remove(),12500);
  }
 }
-makeBalloons();
-</script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Raushani!</title>
-<style>
-*{box-sizing:border-box}
-body{
- margin:0;min-height:100vh;overflow:hidden;
- font-family:Arial,sans-serif;text-align:center;
- background:linear-gradient(135deg,#ffe0ef,#fff0c9,#e4e2ff);
- color:#9b3970;
-}
-h1{margin-top:65px;font-size:34px}
-p{font-size:18px}
-#sky{position:fixed;inset:0;pointer-events:none}
-.balloon{
- position:absolute;bottom:-130px;width:58px;height:75px;
- border-radius:50% 50% 45% 45%;
- pointer-events:auto;cursor:pointer;
- animation:floatUp 9s linear forwards;
- box-shadow:inset -8px -7px 0 #00000012;
-}
-.balloon:after{
- content:"";position:absolute;bottom:-9px;left:25px;
- border-left:5px solid transparent;
- border-right:5px solid transparent;
- border-top:10px solid currentColor;
-}
-@keyframes floatUp{
- to{transform:translateY(-120vh) rotate(12deg)}
-}
-.pop{
- position:absolute;font-size:28px;
- animation:burst .6s forwards;
-}
-@keyframes burst{
- to{transform:scale(2.5);opacity:0}
-}
-button{
- border:0;border-radius:25px;padding:14px 25px;
- background:#ff65a5;color:white;font-size:17px;
- cursor:pointer;
-}
-</style>
-</head>
-<body>
-<h1>🎂 Happy Birthday Raushani! 🎂</h1>
-<p>A little surprise is waiting for you... 💗</p>
-<p>Tap the balloons and pop them! 🎈</p>
-<button onclick="makeBalloons()">More Balloons 🎈</button>
-<div id="sky"></div>
-<script>
-const sky=document.getElementById("sky");
-const colors=["#ff6fae","#8c82ff","#ffbd59","#69c9c1","#ff8290"];
-function makeBalloons(){
- for(let i=0;i<7;i++){
-  const b=document.createElement("div");
-  b.className="balloon";
-  b.style.left=Math.random()*90+"vw";
-  b.style.background=colors[Math.floor(Math.random()*colors.length)];
-  b.style.color=b.style.background;
-  b.style.animationDuration=(7+Math.random()*5)+"s";
-  b.onclick=()=>{
-   const pop=document.createElement("div");
-   pop.className="pop";
-   pop.textContent="🎉💖✨";
-   pop.style.left=b.getBoundingClientRect().left+"px";
-   pop.style.top=b.getBoundingClientRect().top+"px";
-   sky.appendChild(pop);
-   b.remove();
-   setTimeout(()=>pop.remove(),650);
-  };
-  sky.appendChild(b);
-  setTimeout(()=>b.remove(),12500);
- }
+function floatDecorations(){
+ const symbols=["💖","💕","💗","✨","⭐","🌟"];
+ const d=document.createElement("div");
+ d.className="floating "+(Math.random()>.5?"heart":"sparkle");
+ d.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+ d.style.left=Math.random()*95+"vw";
+ d.style.animationDuration=(5+Math.random()*5)+"s";
+ sky.appendChild(d);
+ setTimeout(()=>d.remove(),11000);
 }
 makeBalloons();
+setInterval(floatDecorations,600);
 </script>
 </body>
 </html>
