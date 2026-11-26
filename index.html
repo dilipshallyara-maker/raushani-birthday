@@ -3,6 +3,93 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Birthday Raushani!</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;overflow:hidden;
+ text-align:center;font-family:Arial,sans-serif;
+ background:linear-gradient(135deg,#ffe0ef,#fff0c9,#e4e2ff);
+ color:#9b3970;
+}
+h1{margin-top:65px;font-size:32px}
+p{font-size:18px}
+#sky{position:fixed;inset:0;pointer-events:none}
+.balloon{
+ position:absolute;bottom:-110px;width:58px;height:75px;
+ border-radius:50%;cursor:pointer;pointer-events:auto;
+ animation:rise 9s linear forwards;
+ box-shadow:inset -8px -7px 0 #0002;
+}
+.balloon:after{
+ content:"";position:absolute;bottom:-9px;left:24px;
+ border-left:5px solid transparent;
+ border-right:5px solid transparent;
+ border-top:10px solid currentColor;
+}
+@keyframes rise{to{transform:translateY(-120vh) rotate(12deg)}}
+.confetti{
+ position:absolute;width:9px;height:14px;
+ animation:burst 1.5s ease-out forwards;
+}
+@keyframes burst{
+ to{transform:translate(var(--x),var(--y)) rotate(720deg);opacity:0}
+}
+button{
+ border:0;border-radius:25px;padding:14px 25px;
+ background:#ff65a5;color:white;font-size:17px;
+}
+</style>
+</head>
+<body>
+<h1>🎂 Happy Birthday Raushani! 🎂</h1>
+<p>A little surprise is waiting for you... 💗</p>
+<p>Tap the balloons and pop them! 🎈</p>
+<button onclick="makeBalloons()">More Balloons 🎈</button>
+<div id="sky"></div>
+<script>
+const sky=document.getElementById("sky");
+const colors=["#ff6fae","#8c82ff","#ffbd59","#69c9c1","#ff8290"];
+
+function popBalloon(b){
+ const r=b.getBoundingClientRect();
+ for(let i=0;i<35;i++){
+  const c=document.createElement("div");
+  c.className="confetti";
+  c.style.background=colors[Math.floor(Math.random()*colors.length)];
+  c.style.left=(r.left+25)+"px";
+  c.style.top=(r.top+30)+"px";
+  c.style.setProperty("--x",(Math.random()*240-120)+"px");
+  c.style.setProperty("--y",(Math.random()*240-120)+"px");
+  sky.appendChild(c);
+  setTimeout(()=>c.remove(),1600);
+ }
+ b.remove();
+}
+
+function makeBalloons(){
+ for(let i=0;i<7;i++){
+  const b=document.createElement("div");
+  b.className="balloon";
+  b.style.left=Math.random()*90+"vw";
+  b.style.background=colors[Math.floor(Math.random()*colors.length)];
+  b.style.color=b.style.background;
+  b.style.animationDuration=(7+Math.random()*5)+"s";
+  b.onclick=()=>popBalloon(b);
+  sky.appendChild(b);
+  setTimeout(()=>b.remove(),12500);
+ }
+}
+makeBalloons();
+</script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday Raushani!</title>
 <style>
