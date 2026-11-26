@@ -1,143 +1,99 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Raushani's Birthday Surprise</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Special Card for Raushani 💌</title>
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;min-height:100vh;overflow:hidden;text-align:center;
- font-family:Arial,sans-serif;
- background:linear-gradient(135deg,#ffe0ef,#fff0c9,#e4e2ff);
- color:#9b3970;
-}
-h1{margin-top:45px;font-size:30px}
-p{font-size:18px}
-button{
- border:0;border-radius:25px;padding:14px 24px;
- background:#ff65a5;color:white;font-size:17px;
- cursor:pointer;margin:10px;
-}
-#sky{position:fixed;inset:0;pointer-events:none}
-#giftArea{margin-top:55px;position:relative;z-index:2}
-#gift{font-size:100px;cursor:pointer;display:inline-block;
- animation:bounce 1s infinite alternate}
-@keyframes bounce{to{transform:translateY(-12px)}}
-#message{
- display:none;font-size:25px;font-weight:bold;
- background:#fff9;padding:20px;border-radius:20px;
- margin:20px auto;max-width:90%;
- animation:appear .8s ease;
-}
-@keyframes appear{from{opacity:0;transform:scale(.5)}
-to{opacity:1;transform:scale(1)}}
-.balloon{
- position:absolute;bottom:-110px;width:58px;height:75px;
- border-radius:50%;cursor:pointer;pointer-events:auto;
- animation:rise 9s linear forwards;
- box-shadow:inset -8px -7px 0 #0002;
-}
-.balloon:after{
- content:"";position:absolute;bottom:-9px;left:24px;
- border-left:5px solid transparent;
- border-right:5px solid transparent;
- border-top:10px solid currentColor;
-}
-@keyframes rise{to{transform:translateY(-120vh) rotate(12deg)}}
-.confetti{
- position:absolute;width:9px;height:14px;
- animation:burst 1.5s ease-out forwards;
-}
-@keyframes burst{
- to{transform:translate(var(--x),var(--y)) rotate(720deg);opacity:0}
-}
-.floating{
- position:absolute;bottom:-40px;
- animation:float 7s linear forwards;
-}
-.heart{font-size:25px}
-.sparkle{font-size:22px}
-@keyframes float{
- to{transform:translateY(-115vh) rotate(35deg);opacity:0}
-}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:linear-gradient(135deg,#ffe2ee,#f4e6ff,#e1f4ff);color:#65364f;text-align:center;min-height:100vh}
+main{width:min(92%,650px);margin:24px auto;padding:24px 18px;background:#ffffffd9;border:2px solid #fff;border-radius:28px;box-shadow:0 12px 35px #b77c9b35;min-height:70vh}
+h1{font-size:clamp(1.7rem,6vw,2.5rem);margin:12px 0}p{line-height:1.65}.hidden{display:none!important}
+button{border:0;border-radius:999px;padding:13px 23px;margin:8px;background:#ed75a8;color:white;font-size:1rem;font-weight:700;box-shadow:0 5px 0 #c65386;cursor:pointer}
+button.secondary{background:#a98be9;box-shadow:0 5px 0 #8064bf}.big{font-size:4rem;cursor:pointer;display:inline-block;animation:bob 1.8s infinite}
+@keyframes bob{50%{transform:translateY(-9px) rotate(3deg)}}@keyframes pop{to{transform:scale(1.7);opacity:0}}
+.gift{font-size:6rem;display:block;margin:22px auto;cursor:pointer;animation:bob 1.6s infinite}
+.balloon{position:relative;display:inline-block;font-size:3.4rem;margin:12px;cursor:pointer;animation:bob 2s infinite}
+.balloon.popped{animation:pop .25s forwards;pointer-events:none}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:20}
+input{padding:13px;border:2px solid #e9a4c4;border-radius:12px;font-size:1.2rem;width:150px;text-align:center;letter-spacing:5px}
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
+.gallery figure{margin:0;background:#fff;padding:7px;border-radius:16px;box-shadow:0 4px 12px #a66b8b25}
+.gallery img{width:100%;height:220px;object-fit:cover;border-radius:11px}
+.gallery figcaption{font-size:.9rem;padding:7px}
+.gallery figure:last-child{grid-column:1/-1}.gallery figure:last-child img{height:auto;max-height:430px;object-fit:contain;background:#f8edf4}
+.letter{background:#fff8fc;border:1px dashed #e28bb5;border-radius:18px;padding:20px;text-align:left;white-space:pre-line}
+.tiny{font-size:.9rem;opacity:.8}.sad{font-size:5rem;animation:sad 1s infinite alternate}@keyframes sad{to{transform:translateY(8px)}}
 </style>
 </head>
-<body>
-<h1>🎀 A Little Surprise for You 🎀</h1>
-<p>Someone special has a surprise for you! 💗</p>
-
-<div id="giftArea">
- <div id="gift" onclick="openGift()">🎁</div>
- <p>Tap the gift to open your surprise!</p>
- <div id="message">
-  🎂 Happy Birthday Raushani! 🎂
-  <p>You are special! Keep smiling! ❤️</p>
-  <button onclick="startBalloons()">Release Balloons 🎈</button>
- </div>
+<body><canvas id="confetti"></canvas><main>
+<section id="cover">
+<div class="big">💌</div><h1>A special card for<br>Raushani</h1><p>from Shweta 🌷</p>
+<button onclick="show('birthday');burst(150)">Open your secret card ✨</button>
+</section>
+<section id="birthday" class="hidden">
+<div class="big">🎂</div><h1>Happy Birthday, Raushani! 🎉</h1>
+<p>May your day be full of smiles, surprises, laughter and lovely memories. Keep shining! 💗</p>
+<button onclick="show('balloons');burst(100)">Let's celebrate! 🎈</button>
+</section>
+<section id="balloons" class="hidden">
+<h1>Pop the balloons! 🎈</h1><p>Tap every balloon and see the surprise!</p>
+<div id="balloonArea"></div><p id="balloonCount">0 / 8 popped</p>
+</section>
+<section id="more" class="hidden">
+<div class="big">💖</div><h1>Do you want to see more?</h1>
+<button onclick="show('pin');burst(130)">YES! 💗</button>
+<button class="secondary" onclick="show('nope')">NO 🙈</button>
+</section>
+<section id="nope" class="hidden">
+<div class="sad">🥺</div><h1>Awww… don't say no!</h1><p>This little cartoon is getting teary! There are more surprises waiting. 💌</p>
+<button onclick="show('more')">Okay, show me! 💕</button>
+</section>
+<section id="pin" class="hidden">
+<div class="big">🔐</div><h1>Secret PIN</h1><p>Enter the special 4-digit code to unlock your surprises.</p>
+<input id="pinInput" inputmode="numeric" maxlength="4" placeholder="••••">
+<br><button onclick="unlock()">Unlock 💝</button><p id="pinError" class="tiny"></p>
+</section>
+<section id="memories" class="hidden">
+<h1>Little moments, big memories 📸</h1><p>Four lovely snapshots of you… and one memory together. 💗</p>
+<div class="gallery">
+<figure><img src="photos/raushani-1.jpg" alt="Raushani photo 1"><figcaption>That lovely smile 🌸</figcaption></figure>
+<figure><img src="photos/raushani-2.jpg" alt="Raushani photo 2"><figcaption>A little elegance ✨</figcaption></figure>
+<figure><img src="photos/raushani-3.jpg" alt="Raushani photo 3"><figcaption>Friday vibes 💕</figcaption></figure>
+<figure><img src="photos/raushani-4.jpg" alt="Raushani photo 4"><figcaption>Our shining star 🇮🇳</figcaption></figure>
+<figure><img src="photos/shweta-and-raushani.jpg" alt="Shweta and Raushani together"><figcaption>One picture, two smiles, a memory to keep forever 🫶</figcaption></figure>
 </div>
+<button onclick="show('letter');burst(100)">Read your secret letter 💌</button>
+</section>
+<section id="letter" class="hidden">
+<div class="big">💌</div><h1>A little letter for you</h1>
+<div class="letter">Dear Raushani,
 
-<div id="sky"></div>
+Happy Birthday! 💗
 
+I hope this new year of your life brings you countless reasons to smile, lovely surprises and beautiful memories. Keep being your cheerful, unique self. Never stop dreaming, laughing or believing in yourself.
+
+Thank you for being a special part of my memories. The little moments, silly laughs and time spent together are worth keeping close. No matter how busy life gets, I hope we always make more happy memories together.
+
+Today is your day, so enjoy every moment, eat lots of cake and keep shining!
+
+With lots of love and best wishes,
+Your Shweta 🌷</div>
+<button onclick="show('finale');burst(180)">One last surprise 🎁</button>
+</section>
+<section id="finale" class="hidden">
+<div class="big">🎁</div><h1>Make a wish, Raushani! ✨</h1>
+<p>May your year be as wonderful as you are. Happy Birthday once again! 🎂💖</p>
+<div style="font-size:3rem">🎊🎈🌷💝🎉</div>
+<button onclick="burst(220)">More confetti! 🎉</button>
+</section>
+</main>
 <script>
-const sky=document.getElementById("sky");
-const colors=["#ff6fae","#8c82ff","#ffbd59","#69c9c1","#ff8290"];
-let opened=false;
-
-function openGift(){
- if(opened)return;
- opened=true;
- document.getElementById("gift").textContent="🎀";
- document.querySelector("#giftArea p").textContent="Surprise! 💖";
- document.getElementById("message").style.display="block";
- confettiBurst(innerWidth/2,innerHeight/2);
-}
-
-function confettiBurst(x,y){
- for(let i=0;i<35;i++){
-  const c=document.createElement("div");
-  c.className="confetti";
-  c.style.background=colors[Math.floor(Math.random()*colors.length)];
-  c.style.left=x+"px";c.style.top=y+"px";
-  c.style.setProperty("--x",(Math.random()*240-120)+"px");
-  c.style.setProperty("--y",(Math.random()*240-120)+"px");
-  sky.appendChild(c);
-  setTimeout(()=>c.remove(),1600);
- }
-}
-
-function popBalloon(b){
- const r=b.getBoundingClientRect();
- confettiBurst(r.left+25,r.top+30);
- b.remove();
-}
-
-function startBalloons(){
- for(let i=0;i<12;i++){
-  const b=document.createElement("div");
-  b.className="balloon";
-  b.style.left=Math.random()*90+"vw";
-  b.style.background=colors[Math.floor(Math.random()*colors.length)];
-  b.style.color=b.style.background;
-  b.style.animationDuration=(7+Math.random()*5)+"s";
-  b.onclick=()=>popBalloon(b);
-  sky.appendChild(b);
-  setTimeout(()=>b.remove(),12500);
- }
-}
-
-function floatDecorations(){
- const symbols=["💖","💕","💗","✨","⭐","🌟"];
- const d=document.createElement("div");
- d.className="floating "+(Math.random()>.5?"heart":"sparkle");
- d.textContent=symbols[Math.floor(Math.random()*symbols.length)];
- d.style.left=Math.random()*95+"vw";
- d.style.animationDuration=(5+Math.random()*5)+"s";
- sky.appendChild(d);
- setTimeout(()=>d.remove(),11000);
-}
-setInterval(floatDecorations,600);
-</script>
-</body>
-</html>
+function show(id){document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');window.scrollTo(0,0)}
+const area=document.getElementById('balloonArea');let popped=0;
+for(let i=0;i<8;i++){let b=document.createElement('span');b.className='balloon';b.textContent=['🎈','🎈','🎈','🎈'][i%4];b.setAttribute('role','button');b.setAttribute('aria-label','Pop balloon');b.onclick=()=>{if(b.classList.contains('popped'))return;b.classList.add('popped');popped++;burst(35);document.getElementById('balloonCount').textContent=popped+' / 8 popped';if(popped===8){setTimeout(()=>{show('more');burst(150)},700)}};area.appendChild(b)}
+const canvas=document.getElementById('confetti'),ctx=canvas.getContext('2d');let bits=[];
+function resize(){canvas.width=innerWidth*devicePixelRatio;canvas.height=innerHeight*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0)}addEventListener('resize',resize);resize();
+function burst(n=100){for(let i=0;i<n;i++)bits.push({x:innerWidth/2+(Math.random()-.5)*180,y:innerHeight*.35+(Math.random()-.5)*100,vx:(Math.random()-.5)*10,vy:Math.random()*-9-2,g:.15+Math.random()*.12,size:4+Math.random()*7,rot:Math.random()*6,vr:(Math.random()-.5)*.25,h:Math.random()*360,life:100+Math.random()*70})}
+function frame(){ctx.clearRect(0,0,innerWidth,innerHeight);bits=bits.filter(b=>b.life-->0&&b.y<innerHeight+30);for(const b of bits){b.x+=b.vx;b.y+=b.vy;b.vy+=b.g;b.rot+=b.vr;ctx.save();ctx.translate(b.x,b.y);ctx.rotate(b.rot);ctx.fillStyle=`hsl(${b.h},90%,65%)`;ctx.fillRect(-b.size/2,-b.size/2,b.size,b.size*1.5);ctx.restore()}requestAnimationFrame(frame)}frame();
+function unlock(){if(document.getElementById('pinInput').value==='2005'){show('memories');burst(180)}else{document.getElementById('pinError').textContent='Oops! Try the secret PIN again 💗'}}
+document.getElementById('pinInput').addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});
+</script></body></html>
