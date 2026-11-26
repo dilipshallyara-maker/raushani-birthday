@@ -4,18 +4,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Happy Birthday Raushani!</title>
+<title>Raushani's Birthday Surprise</title>
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;min-height:100vh;overflow:hidden;
- text-align:center;font-family:Arial,sans-serif;
+ margin:0;min-height:100vh;overflow:hidden;text-align:center;
+ font-family:Arial,sans-serif;
  background:linear-gradient(135deg,#ffe0ef,#fff0c9,#e4e2ff);
  color:#9b3970;
 }
-h1{margin-top:65px;font-size:32px}
+h1{margin-top:45px;font-size:30px}
 p{font-size:18px}
+button{
+ border:0;border-radius:25px;padding:14px 24px;
+ background:#ff65a5;color:white;font-size:17px;
+ cursor:pointer;margin:10px;
+}
 #sky{position:fixed;inset:0;pointer-events:none}
+#giftArea{margin-top:55px;position:relative;z-index:2}
+#gift{font-size:100px;cursor:pointer;display:inline-block;
+ animation:bounce 1s infinite alternate}
+@keyframes bounce{to{transform:translateY(-12px)}}
+#message{
+ display:none;font-size:25px;font-weight:bold;
+ background:#fff9;padding:20px;border-radius:20px;
+ margin:20px auto;max-width:90%;
+ animation:appear .8s ease;
+}
+@keyframes appear{from{opacity:0;transform:scale(.5)}
+to{opacity:1;transform:scale(1)}}
 .balloon{
  position:absolute;bottom:-110px;width:58px;height:75px;
  border-radius:50%;cursor:pointer;pointer-events:auto;
@@ -45,39 +62,59 @@ p{font-size:18px}
 @keyframes float{
  to{transform:translateY(-115vh) rotate(35deg);opacity:0}
 }
-button{
- border:0;border-radius:25px;padding:14px 25px;
- background:#ff65a5;color:white;font-size:17px;
-}
 </style>
 </head>
 <body>
-<h1>🎂 Happy Birthday Raushani! 🎂</h1>
-<p>A little surprise is waiting for you... 💗</p>
-<p>Tap the balloons and pop them! 🎈</p>
-<button onclick="makeBalloons()">More Balloons 🎈</button>
+<h1>🎀 A Little Surprise for You 🎀</h1>
+<p>Someone special has a surprise for you! 💗</p>
+
+<div id="giftArea">
+ <div id="gift" onclick="openGift()">🎁</div>
+ <p>Tap the gift to open your surprise!</p>
+ <div id="message">
+  🎂 Happy Birthday Raushani! 🎂
+  <p>You are special! Keep smiling! ❤️</p>
+  <button onclick="startBalloons()">Release Balloons 🎈</button>
+ </div>
+</div>
+
 <div id="sky"></div>
+
 <script>
 const sky=document.getElementById("sky");
 const colors=["#ff6fae","#8c82ff","#ffbd59","#69c9c1","#ff8290"];
+let opened=false;
 
-function popBalloon(b){
- const r=b.getBoundingClientRect();
+function openGift(){
+ if(opened)return;
+ opened=true;
+ document.getElementById("gift").textContent="🎀";
+ document.querySelector("#giftArea p").textContent="Surprise! 💖";
+ document.getElementById("message").style.display="block";
+ confettiBurst(innerWidth/2,innerHeight/2);
+}
+
+function confettiBurst(x,y){
  for(let i=0;i<35;i++){
   const c=document.createElement("div");
   c.className="confetti";
   c.style.background=colors[Math.floor(Math.random()*colors.length)];
-  c.style.left=(r.left+25)+"px";
-  c.style.top=(r.top+30)+"px";
+  c.style.left=x+"px";c.style.top=y+"px";
   c.style.setProperty("--x",(Math.random()*240-120)+"px");
   c.style.setProperty("--y",(Math.random()*240-120)+"px");
   sky.appendChild(c);
   setTimeout(()=>c.remove(),1600);
  }
+}
+
+function popBalloon(b){
+ const r=b.getBoundingClientRect();
+ confettiBurst(r.left+25,r.top+30);
  b.remove();
 }
-function makeBalloons(){
- for(let i=0;i<7;i++){
+
+function startBalloons(){
+ for(let i=0;i<12;i++){
   const b=document.createElement("div");
   b.className="balloon";
   b.style.left=Math.random()*90+"vw";
@@ -89,6 +126,7 @@ function makeBalloons(){
   setTimeout(()=>b.remove(),12500);
  }
 }
+
 function floatDecorations(){
  const symbols=["💖","💕","💗","✨","⭐","🌟"];
  const d=document.createElement("div");
@@ -99,7 +137,6 @@ function floatDecorations(){
  sky.appendChild(d);
  setTimeout(()=>d.remove(),11000);
 }
-makeBalloons();
 setInterval(floatDecorations,600);
 </script>
 </body>
