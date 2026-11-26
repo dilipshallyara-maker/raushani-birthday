@@ -27,12 +27,12 @@ input{padding:13px;border:2px solid #e9a4c4;border-radius:12px;font-size:1.2rem;
 <body><canvas id="confetti"></canvas><main>
 <section id="cover">
 <div class="big">💌</div><h1>A special card for<br>Raushani</h1><p>from Shweta 🌷</p>
-<button onclick="show('birthday');burst(150)">Open your secret card ✨</button>
+<button onclick="openCard()">Open your secret card ✨</button>
 </section>
 <section id="birthday" class="hidden">
 <div class="big">🎂</div><h1>Happy Birthday, Raushani! 🎉</h1>
 <p>May your day be full of smiles, surprises, laughter and lovely memories. Keep shining! 💗</p>
-<button onclick="show('balloons');burst(100)">Let's celebrate! 🎈</button>
+<p class="tiny">Your balloons are coming… 🎈</p>
 </section>
 <section id="balloons" class="hidden">
 <h1>Pop the balloons! 🎈</h1><p>Tap every balloon and see the surprise!</p>
@@ -88,6 +88,7 @@ Your Shweta 🌷</div>
 </main>
 <script>
 function show(id){document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');window.scrollTo(0,0)}
+function openCard(){show('birthday');burst(180);setTimeout(()=>{show('balloons');burst(120)},2500)}
 const area=document.getElementById('balloonArea');let popped=0;
 for(let i=0;i<8;i++){let b=document.createElement('span');b.className='balloon';b.textContent=['🎈','🎈','🎈','🎈'][i%4];b.setAttribute('role','button');b.setAttribute('aria-label','Pop balloon');b.onclick=()=>{if(b.classList.contains('popped'))return;b.classList.add('popped');popped++;burst(35);document.getElementById('balloonCount').textContent=popped+' / 8 popped';if(popped===8){setTimeout(()=>{show('more');burst(150)},700)}};area.appendChild(b)}
 const canvas=document.getElementById('confetti'),ctx=canvas.getContext('2d');let bits=[];
